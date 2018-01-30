@@ -50,6 +50,14 @@ site_stats$PQ_est = Q_est * (1 - Q_est)
 site_stats$Q_var_scaled = 2*Q_var*n_loci
 site_stats$mean.LD= ( 2*Q_var*n_loci+p_var - Q_est * (1 - Q_est) )/(n_loci-1)
 
+#Perform regression (trying just a linear model)
+mean.LD_center = predict(lm(mean.LD ~ pq_mean,data=site_stats),
+                         data.frame(pq_mean=0.25,row.names = "center"))
+
+#Assuming recombination_rate is 0.5
+mean.selection = 4 * mean.LD_center
+print(width_to_dispersal_ratio <- sqrt(8/mean.selection) )
+
 
 
 
